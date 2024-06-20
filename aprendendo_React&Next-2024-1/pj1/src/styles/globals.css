@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+  color: rgb(161, 231, 225);
+}
+
+@keyframes is-rotating {
+
+  to {
+    transform: rotate(720deg) ; 
+  }
+}
+
+
+
+
