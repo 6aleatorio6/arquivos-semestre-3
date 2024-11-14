@@ -1,3 +1,4 @@
+<?php include_once('_parts/mysql.php') ?>
 <!doctype html>
 <html lang="pt-br">
 
@@ -27,11 +28,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th>1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
+                <?php
+                $result = $db->query("select * from user");
+
+                foreach ($result->fetch_all(MYSQLI_ASSOC) as $value) {
+                ?>
+                    <tr>
+                        <th><?= $value["id"] ?></th>
+                        <td><?= $value["name"] ?></td>
+                        <td><?= $value["email"] ?></td>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
     </div>
