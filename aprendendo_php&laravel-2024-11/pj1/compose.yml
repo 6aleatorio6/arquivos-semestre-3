@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mysql/mysql-server:latest
+    container_name: db_php
+    environment:
+      - MYSQL_USER=db_php
+      - MYSQL_PASSWORD=db_php
+      - MYSQL_DATABASE=db_php
+    ports:
+      - '3306:3306'
+
+
