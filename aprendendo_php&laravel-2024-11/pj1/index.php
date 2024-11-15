@@ -11,9 +11,11 @@
 
 <body class="container ">
     <?php include('_parts/nav.php') ?>
+    <?php include_once('_parts/auth.php') ?>
 
     <h1>hello, criatura estranha!</h1>
-    <h6>parece que você não está logado</h6>
+
+    <h6><?= getUserSession() ? ' olá novamente ' . getUserSession()['name'] : "parece que você não está logado" ?></h6>
 
 
     <div class="mt-5 ">
@@ -29,16 +31,20 @@
             </thead>
             <tbody>
                 <?php
-                $result = $db->query("select * from user");
-
-                foreach ($result->fetch_all(MYSQLI_ASSOC) as $value) {
+                try {
+                    foreach ($userRepo->getAll() as $value) {
                 ?>
-                    <tr>
-                        <th><?= $value["id"] ?></th>
-                        <td><?= $value["name"] ?></td>
-                        <td><?= $value["email"] ?></td>
-                    </tr>
-                <?php } ?>
+                        <tr>
+                            <th><?= $value["id"] ?></th>
+                            <td><?= $value["name"] ?></td>
+                            <td><?= $value["email"] ?></td>
+                        </tr>
+                <?php }
+                } catch (\Throwable $th) {
+                    echo '<div class="alert alert-danger" role="alert">erro ao buscar os users! ' . $th->getMessage()  . '</div>';
+                }
+
+                ?>
             </tbody>
         </table>
     </div>

@@ -2,18 +2,6 @@
 <html lang="pt-br">
 
 <?php include_once('_parts/mysql.php') ?>
-<?php
-if ($_POST) {
-    $name = $db->escape_string($_POST["name"]);
-    $email = $db->escape_string($_POST["email"]);
-    $password = $db->escape_string($_POST["password"]);
-
-    $result = $db->query("INSERT INTO user (name, email, password) VALUES ('$name', '$email', '$password')");
-    if (!$result) die("erro ao cadastrar");
-
-    echo "<script>alert('Conta criada! bem-vindo $name');</script>";
-}
-?>
 
 <head>
     <meta charset="utf-8">
@@ -23,8 +11,19 @@ if ($_POST) {
 </head>
 
 <body class="container vh-100">
-    <?php include('_parts/nav.php') ?>
+    <?php require_once('_parts/nav.php') ?>
 
+    <?php
+    if ($_POST['email']) {
+        try {
+            $result = $userRepo->create($_POST["name"], $_POST["password"], $_POST["email"]);
+
+            echo '<div class="alert alert-success" role="alert">usuario cadastrado!</div>';
+        } catch (\Throwable $th) {
+            echo '<div class="alert alert-danger" role="alert">erro ao cadastrar! ' . $th->getMessage()  . '</div>';
+        }
+    }
+    ?>
 
     <form class="mt-5" method="post">
         <h3>cadastre-se</h3>

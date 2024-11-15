@@ -1,17 +1,10 @@
 <!doctype html>
 <html lang="pt-br">
-
-
-
 <?php include_once('_parts/mysql.php') ?>
-<?php
-if ($_POST) {
-    $email = $db->escape_string($_POST["email"]);
-    $password = $db->escape_string($_POST["password"]);
 
-    $result = $db->query("select email, password from user where email = " . $db->escape_string($email));
-}
-?>
+
+
+
 
 <head>
     <meta charset="utf-8">
@@ -24,7 +17,23 @@ if ($_POST) {
     <?php include('_parts/nav.php') ?>
 
 
-    <form class="mt-5">
+    <form class="mt-5" method="post">
+        <?php
+        require_once('_parts/auth.php');
+
+
+        if ($_POST['email']) {
+            try {
+                $user = trylogin($_POST["email"], $_POST["password"], $userRepo);
+
+
+                echo '<script>location.href = "index.php"</script>';
+            } catch (\Throwable $th) {
+                echo '<div class="alert alert-danger" role="alert">' . $th->getMessage()  . '</div>';
+            }
+        }
+        ?>
+
         <h3>login</h3>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
