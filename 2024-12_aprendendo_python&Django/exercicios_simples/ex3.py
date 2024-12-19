@@ -49,8 +49,11 @@ while True:
 
 total = reduce(lambda a, b: a+b, sistemas_count)
 
+print(
+f"Sistema Operacional     Votos      %")
+
 aux = [
-    ("Windows Server           {}   {}%"),
+("Windows Server           {}   {}%"),
 ("Unix                     {}   {}%"),
 ("Linux                    {}   {}%"),
 ("Netware                  {}   {}%"),
@@ -58,10 +61,9 @@ aux = [
 ("Outro                    {}   {}%"),]
       
 
-print("Sistema Operacional     Votos   %  ")
 
 for key, i in enumerate(aux):
-    print(i.format(sistemas_count[key], int(sistemas_count[key] / total * 100)))
+    print(i.format(sistemas_count[key].__str__().ljust(8), (int(sistemas_count[key] / total * 100))))
 
 print(" -------------------     -----     ")
 print("Total                    {}      ".format(total))
