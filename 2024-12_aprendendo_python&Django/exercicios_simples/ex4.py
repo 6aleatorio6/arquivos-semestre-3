@@ -23,18 +23,14 @@
 # 257.32.4.5
 # 85.345.1.2
 # 9.8.234.5
-# 192.168.0.256]
+# 192.168.0.256
 
 
-import os, re
+import re
+from funcao_aux import input_pathFile
 
 
-while True :
-    path = input("digite o caminho relativo do arquivo: ")
-
-    if os.path.exists(path): break
-    print("Caminho inválido!")
-    
+path = input_pathFile()    
 dir = path.split("/")[0]
 file_name = path.split("/")[-1]
 
